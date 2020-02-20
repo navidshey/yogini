@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "allowJs": true,
+    "target": "es6",
+    "typeRoots": ["node_modules/@types", "./types/custom_typings"]
+  },
+  "include": [
+    "./config/**/*",
+    "./models/**/*",
+    "./routes/**/*",
+    "./validation/**/*",
+    "server.ts"
+  ]
+}
