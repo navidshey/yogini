@@ -1,7 +1,22 @@
 import React, { Component } from "react";
-import axios from "axios";
+import PropTypes from "prop-types";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import { registerUser } from "../../store/actions/authActions";
+import { RegisterState, ActionTypes, ErrorState } from "../../store/types";
+import { bindActionCreators, Dispatch } from "redux";
+
 // import FormComponent from "../base/FormComponent";
+
+interface StateProps {
+  auth: RegisterState;
+  errors: ErrorState;
+}
+
+interface mapDispatch {
+  registerUser: (userData: any, history: any) => any;
+}
 
 type State = {
   name: string;
@@ -10,7 +25,7 @@ type State = {
   password2: string;
   errors?: any;
 };
-type Props = {};
+type Props = StateProps & mapDispatch & RouteComponentProps;
 
 class Register extends Component<Props, any> {
   constructor(props: Props) {
@@ -27,6 +42,12 @@ class Register extends Component<Props, any> {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentWillReceiveProps(nextProps: Props) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   onChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -41,15 +62,13 @@ class Register extends Component<Props, any> {
       password2: this.state.password2
     };
 
-    axios
-      .post("/api/users/register", newUser)
-      .then(response => console.log(response.data))
-      .catch(err => this.setState({ errors: err.response.data }));
+    const history = this.props.history;
+    console.log(history);
+    this.props.registerUser(newUser, history);
   }
 
   render() {
     const { errors } = this.state;
-
     return (
       <div className="register">
         <div className="container">
@@ -134,4 +153,22 @@ class Register extends Component<Props, any> {
   }
 }
 
-export default Register;
+(Register as any).propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state: StateProps) => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return bindActionCreators(registerUser, dispatch);
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Register));

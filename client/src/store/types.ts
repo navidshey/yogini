@@ -1,20 +1,23 @@
 // src/store/chat/types.ts
 
-export const TEST_DISPATCH = 'TEST_DISPATCH';
+export const GET_ERRORS = "GET_ERRORS";
 
 export interface Message {
-    user: string
-    message: string
-    timestamp: number
-  }
+  user: string;
+  message: string;
+  timestamp: number;
+}
 
-  export interface RegisterState {
-    messages: Message[]
-  }
+export interface RegisterState {
+  isAuthenticatd: boolean;
+  user: any;
+}
 
-  interface SendMessageAction{
-      type: typeof TEST_DISPATCH,
-      payload: Message
-  }
+export interface ErrorState {}
 
-  export type RegisterActionTypes = SendMessageAction
+interface SendMessageAction {
+  type: string;
+  payload: Message;
+}
+
+export type ActionTypes = SendMessageAction;

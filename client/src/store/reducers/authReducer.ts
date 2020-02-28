@@ -1,17 +1,15 @@
-import { TEST_DISPATCH, RegisterActionTypes } from '../types'
-const initialState ={
-    isAuthenticatd: false,
-    user: {}
-}
+import { ActionTypes, RegisterState } from "../types";
+const initialState: RegisterState = {
+  isAuthenticatd: false,
+  user: {}
+};
 
-export default function(state=initialState, action: RegisterActionTypes){
-    switch (action.type) {
-        case TEST_DISPATCH:
-            return {
-                ...state,
-                user: action.payload
-            }
-        default:
-            return state;
-    }
+export default function(
+  state = initialState,
+  action: ActionTypes
+): RegisterState {
+  switch (action.type) {
+    default:
+      return state;
+  }
 }
