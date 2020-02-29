@@ -1,6 +1,14 @@
+import { IUser } from "../api/auth/models";
+
 // src/store/chat/types.ts
 
-export const GET_ERRORS = "GET_ERRORS";
+export enum ActionTypeKeys {
+  NOACTION="NOACTION",
+  DONE="DONE",
+  REGISTER_DONE= "REGISTER_DONE",
+  GET_ERRORS = "GET_ERRORS",
+  SERVER_ERROR = "SERVER_ERROR"
+}
 
 export interface Message {
   user: string;
@@ -9,15 +17,16 @@ export interface Message {
 }
 
 export interface RegisterState {
-  isAuthenticatd: boolean;
-  user: any;
+  type: ActionTypeKeys; 
+  isAuthenticatd?: boolean;
+  user?: IUser;
 }
 
-export interface ErrorState {}
+export interface ErrorState  {}
 
 interface SendMessageAction {
-  type: string;
-  payload: Message;
+  type: ActionTypeKeys;
+  payload: Message | Error;
 }
 
-export type ActionTypes = SendMessageAction;
+export type ActionTypes = SendMessageAction ;

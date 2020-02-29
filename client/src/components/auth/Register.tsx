@@ -11,7 +11,7 @@ import { bindActionCreators, Dispatch } from "redux";
 
 interface StateProps {
   auth: RegisterState;
-  errors: ErrorState;
+  errors: Error;
 }
 
 interface mapDispatch {
@@ -164,8 +164,8 @@ const mapStateToProps = (state: StateProps) => ({
   errors: state.errors
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return bindActionCreators(registerUser, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch<RegisterState>) => {
+  return bindActionCreators({ registerUser: registerUser }, dispatch);
 };
 
 export default connect(
