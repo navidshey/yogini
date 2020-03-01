@@ -4,14 +4,15 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../store/actions/authActions";
-import { RegisterState, ActionTypes, ErrorState } from "../../store/types";
+import { AuthState, ICustomError } from "../../store/types";
 import { bindActionCreators, Dispatch } from "redux";
+import { ApplicationRoutes } from "../../constants";
 
 // import FormComponent from "../base/FormComponent";
 
 interface StateProps {
-  auth: RegisterState;
-  errors: Error;
+  auth: AuthState;
+  errors: ICustomError;
 }
 
 interface mapDispatch {
@@ -40,6 +41,12 @@ class Register extends Component<Props, any> {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticatd) {
+      this.props.history.push(ApplicationRoutes.DASHBOARD);
+    }
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -164,7 +171,7 @@ const mapStateToProps = (state: StateProps) => ({
   errors: state.errors
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RegisterState>) => {
+const mapDispatchToProps = (dispatch: Dispatch<AuthState>) => {
   return bindActionCreators({ registerUser: registerUser }, dispatch);
 };
 

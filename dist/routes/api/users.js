@@ -89,7 +89,7 @@ router.post("/login", (req, res) => {
                 });
             }
             else {
-                errors.passport = "passowrd incorrect";
+                errors.password = "password incorrect";
                 return res.status(400).json(errors);
             }
         });

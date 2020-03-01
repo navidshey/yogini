@@ -1,18 +1,22 @@
-import { ActionTypeKeys ,ActionTypes, RegisterState } from "../types";
+import { ActionTypeKeys, ActionTypes, AuthState } from "../types";
+import { isEmpty } from "../../validation/is-empty";
 
-const initialState: RegisterState = {
+const initialState: AuthState = {
   isAuthenticatd: false,
   user: undefined,
   type: ActionTypeKeys.NOACTION
 };
 
-export default function(state = initialState, action: ActionTypes): RegisterState {
-
+export default function(state = initialState, action: ActionTypes): AuthState {
   switch (action.type) {
-    case ActionTypeKeys.REGISTER_DONE :
-      return {isAuthenticatd: true, type: ActionTypeKeys.DONE};
-      case ActionTypeKeys.SERVER_ERROR:
-        return { isAuthenticatd: false, type: ActionTypeKeys.SERVER_ERROR }
+    case ActionTypeKeys.REGISTER_DONE:
+      return { isAuthenticatd: true, type: ActionTypeKeys.DONE };
+    case ActionTypeKeys.SET_CURRENT_USER:
+      return {
+        ...state,
+        isAuthenticatd: !isEmpty(action.payload),
+        user: action.payload
+      };
     default:
       return state;
   }

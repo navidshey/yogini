@@ -2,8 +2,13 @@
 import * as Validator from "validator";
 import { isEmpty } from "./is-empty";
 
+interface loginErrors {
+  email?: string;
+  password?: string;
+}
+
 export function validateLoginInput(data) {
-  let errors: any = {};
+  let errors: loginErrors = {};
 
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";

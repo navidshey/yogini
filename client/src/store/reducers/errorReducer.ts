@@ -1,10 +1,15 @@
-import { ActionTypeKeys, ActionTypes, ErrorState } from "../types";
-const initialState: ErrorState = {};
+import { ActionTypeKeys, ActionTypes, ICustomError } from "../types";
+const initialState: any = {};
 
-export default function(state = initialState, action: ActionTypes): ErrorState {
+export default function(
+  state = initialState,
+  action: ActionTypes
+): ICustomError {
   switch (action.type) {
     case ActionTypeKeys.GET_ERRORS:
       return action.payload;
+    // case ActionTypeKeys.SERVER_ERROR:
+    //   return { isAuthenticatd: false, type: ActionTypeKeys.SERVER_ERROR }
     default:
       return state;
   }
