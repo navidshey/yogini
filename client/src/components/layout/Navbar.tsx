@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
 import { logoutUser } from "./../../store/actions/authActions";
+import { clearCurrentProfile } from "./../../store/actions/profileActions";
 import { AuthState } from "../../store/types";
 import { ApplicationRoutes } from "../../constants";
 
@@ -13,6 +14,7 @@ interface StateProps {
 
 interface mapDispatch {
   logoutUser: () => any;
+  clearCurrentProfile: () => any;
 }
 
 type Props = StateProps & mapDispatch;
@@ -105,7 +107,10 @@ const mapStateToProps = (state: StateProps) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AuthState>) => {
-  return bindActionCreators({ logoutUser: logoutUser }, dispatch);
+  return bindActionCreators(
+    { logoutUser: logoutUser, clearCurrentProfile: clearCurrentProfile },
+    dispatch
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

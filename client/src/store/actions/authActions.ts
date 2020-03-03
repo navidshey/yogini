@@ -45,7 +45,7 @@ export const loginUser = (userData: any): Dispatch<any> => (
     });
 };
 
-export const logoutUser = (): Dispatch<AuthState> => (dispatch: any): any => {
+export const logoutUser = (): any => (dispatch: any): any => {
   localStorage.removeItem(LocalStorage.JWTTOKEN);
   setAuthToken(false);
   dispatch(setCurrentUser());
@@ -58,7 +58,7 @@ const catchError = (err: ICustomError): ActionTypes => {
   };
 };
 
-export const setCurrentUser = (decoded?: IUser) => {
+export const setCurrentUser = (decoded?: IUser): any => {
   return {
     type: ActionTypeKeys.SET_CURRENT_USER,
     payload: decoded

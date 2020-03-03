@@ -5,10 +5,15 @@ import { AxiosResponse } from "axios";
 export enum ActionTypeKeys {
   NOACTION = "NOACTION",
   DONE = "DONE",
+  GET_ERRORS = "GET_ERRORS",
+  SERVER_ERROR = "SERVER_ERROR",
   REGISTER_DONE = "REGISTER_DONE",
   SET_CURRENT_USER = "SET_CURRENT_USER",
-  GET_ERRORS = "GET_ERRORS",
-  SERVER_ERROR = "SERVER_ERROR"
+  GET_PROFILE = "GET_PROFILE",
+  PROFILE_LOADING = "PROFILE_LOADING",
+  PROFILE_NOT_FOUND = "PROFILE_NOT_FOUND",
+  CLEAR_CURRENT_PROFILE = "CLEAR_CURRENT_PROFILE",
+  GET_PROFILES = "GET_PROFILES"
 }
 
 export interface IUser {
@@ -20,11 +25,22 @@ export interface IUser {
   exp: number;
 }
 
+export interface IProfile {
+  profile: string;
+  loading: boolean;
+}
+
 //TODO: properties should not be null
 export interface AuthState {
   type: ActionTypeKeys;
   isAuthenticatd?: boolean;
   user?: IUser;
+}
+
+export interface profileState {
+  profile?: IProfile;
+  profiles?: any;
+  loading?: boolean;
 }
 
 export interface ICustomError {
@@ -34,7 +50,7 @@ export interface ICustomError {
 //TODO: any should remove
 interface SendMessageAction {
   type: ActionTypeKeys;
-  payload: IUser | ICustomError | AuthState | any;
+  payload?: IUser | ICustomError | AuthState | profileState | any;
 }
 
 export type ActionTypes = SendMessageAction;
