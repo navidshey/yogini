@@ -4,11 +4,8 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../../store/actions/authActions";
 import { AuthState, ICustomError } from "../../store/types";
-import { bindActionCreators, Dispatch } from "redux";
 import { ApplicationRoutes } from "../../constants";
 import TextFieldGroup from "../common/TextFieldGroup";
-
-// import FormComponent from "../base/FormComponent";
 
 interface StateProps {
   auth: AuthState;
@@ -143,11 +140,4 @@ const mapStateToProps = (state: StateProps) => ({
   errors: state.errors
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AuthState>) => {
-  return bindActionCreators({ registerUser: registerUser }, dispatch);
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Register));
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));

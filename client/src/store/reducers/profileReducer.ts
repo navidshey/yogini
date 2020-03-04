@@ -1,10 +1,6 @@
 import { ActionTypeKeys, ActionTypes, profileState } from "../types";
 
-const initialState: profileState = {
-  profile: undefined,
-  profiles: null,
-  loading: false
-};
+const initialState: profileState = {};
 
 export default (state = initialState, action: ActionTypes): profileState => {
   switch (action.type) {

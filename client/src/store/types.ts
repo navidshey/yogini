@@ -7,7 +7,6 @@ export enum ActionTypeKeys {
   DONE = "DONE",
   GET_ERRORS = "GET_ERRORS",
   SERVER_ERROR = "SERVER_ERROR",
-  REGISTER_DONE = "REGISTER_DONE",
   SET_CURRENT_USER = "SET_CURRENT_USER",
   GET_PROFILE = "GET_PROFILE",
   PROFILE_LOADING = "PROFILE_LOADING",
@@ -25,20 +24,20 @@ export interface IUser {
   exp: number;
 }
 
-export interface IProfile {
-  profile: string;
-  loading: boolean;
-}
+// export interface IProfile {
+//   profile: string;
+//   loading: boolean;
+// }
 
 //TODO: properties should not be null
 export interface AuthState {
-  type: ActionTypeKeys;
+  // type: ActionTypeKeys;
   isAuthenticatd?: boolean;
   user?: IUser;
 }
 
 export interface profileState {
-  profile?: IProfile;
+  profile?: any;
   profiles?: any;
   loading?: boolean;
 }

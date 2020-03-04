@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { ActionTypeKeys, ActionTypes, profileState } from "../types";
+import { ActionTypeKeys, ActionTypes } from "../types";
 import { ApiRoutes } from "../../constants";
 
 export const getCurrentProfile = (): Dispatch<any> => (dispatch: any): any => {

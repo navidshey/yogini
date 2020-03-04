@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
-import { bindActionCreators, Dispatch } from "redux";
 import { AuthState, ICustomError } from "../../store/types";
 import { loginUser } from "./../../store/actions/authActions";
 import { ApplicationRoutes } from "../../constants";
@@ -120,8 +119,4 @@ const mapStateToProps = (state: StateProps) => ({
   errors: state.errors
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AuthState>) => {
-  return bindActionCreators({ loginUser: loginUser }, dispatch);
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, { loginUser })(Login);

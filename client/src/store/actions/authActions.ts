@@ -1,10 +1,4 @@
-import {
-  ActionTypeKeys,
-  AuthState,
-  ICustomError,
-  ActionTypes,
-  IUser
-} from "../types";
+import { ActionTypeKeys, ICustomError, ActionTypes, IUser } from "../types";
 import { Dispatch } from "redux";
 import axios, { AxiosResponse } from "axios";
 import setAuthToken from "../../utils/setAuthToken";
@@ -12,10 +6,9 @@ import jwt_decode from "jwt-decode";
 import { ApplicationRoutes, ApiRoutes, LocalStorage } from "./../../constants/";
 
 //TODO: dispatch types should be proper
-export const registerUser = (
-  userData: any,
-  history: any
-): Dispatch<AuthState> => (dispatch: any): any => {
+export const registerUser = (userData: any, history: any): Dispatch<any> => (
+  dispatch: any
+): any => {
   axios
     .post(ApiRoutes.REGISTER, userData)
     .then(() => history.push(ApplicationRoutes.LOGIN))

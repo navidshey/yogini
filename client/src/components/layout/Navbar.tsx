@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Dispatch, bindActionCreators } from "redux";
 import { logoutUser } from "./../../store/actions/authActions";
 import { clearCurrentProfile } from "./../../store/actions/profileActions";
 import { AuthState } from "../../store/types";
@@ -106,11 +105,7 @@ const mapStateToProps = (state: StateProps) => ({
   auth: state.auth
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AuthState>) => {
-  return bindActionCreators(
-    { logoutUser: logoutUser, clearCurrentProfile: clearCurrentProfile },
-    dispatch
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, {
+  logoutUser,
+  clearCurrentProfile
+})(Navbar);

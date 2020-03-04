@@ -14,8 +14,9 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import { ApplicationRoutes } from "./constants/applicationRoutes";
 import "./App.css";
-import dashboard from "./components/dashboard/Dashboard";
 import { clearCurrentProfile } from "./store/actions/profileActions";
+import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from "./components/common/PrivateRoute";
 
 //This is for reloading the page to user stay loged in
 if (localStorage.jwtToken) {
@@ -45,10 +46,10 @@ function App() {
               component={Register}
             />
             <Route exact path={ApplicationRoutes.LOGIN} component={Login} />
-            <Route
+            <PrivateRoute
               exact
               path={ApplicationRoutes.DASHBOARD}
-              component={dashboard}
+              component={Dashboard}
             />
           </div>
           <Footer />
