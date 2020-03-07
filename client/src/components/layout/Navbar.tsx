@@ -44,6 +44,11 @@ class Navbar extends Component<Props, any> {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
+          <Link className="nav-link" to={ApplicationRoutes.DASHBOARD}>
+            Dashboard
+          </Link>
+        </li>
+        <li className="nav-item">
           <a
             href="#"
             onClick={this.onLogoutClick.bind(this)}
@@ -96,7 +101,7 @@ class Navbar extends Component<Props, any> {
   }
 }
 
-(Navbar as any).PropTypes = {
+(Navbar as any).propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };

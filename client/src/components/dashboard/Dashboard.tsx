@@ -3,9 +3,15 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/spinner";
-import { getCurrentProfile } from "./../../store/actions/profileActions";
+import {
+  getCurrentProfile,
+  deleteAccount
+} from "./../../store/actions/profileActions";
 import { AuthState, profileState } from "../../store/types";
 import { ApplicationRoutes } from "../../constants";
+import ProfileActions from "./profileActions";
+import Experience from "./Experience";
+import Education from "./Education";
 
 interface StateProps {
   profile: profileState;
@@ -14,6 +20,7 @@ interface StateProps {
 
 interface mapDispatch {
   getCurrentProfile: () => any;
+  deleteAccount: () => any;
 }
 
 type State = {};
@@ -25,6 +32,9 @@ class Dashboard extends Component<Props, any> {
     this.props.getCurrentProfile();
   }
 
+  onDeleteClick(e: any) {
+    this.props.deleteAccount();
+  }
   render() {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
@@ -34,7 +44,27 @@ class Dashboard extends Component<Props, any> {
       dashboardContent = <Spinner />;
     } else {
       if (profile && Object.keys(profile).length > 0) {
-        dashboardContent = <h4>TODO: Display Profile</h4>;
+        dashboardContent = (
+          <div>
+            <p className="lead text-muted">
+              Welcome{" "}
+              <Link to={`/profile/${profile.handle}`}>{user && user.name}</Link>{" "}
+            </p>
+            <ProfileActions />
+            {profile.experience && (
+              <Experience experience={profile.experience} />
+            )}
+            {profile.education && <Education education={profile.education} />}
+            <div style={{ marginBottom: "60px" }}>
+              <button
+                onClick={this.onDeleteClick.bind(this)}
+                className="btn btn-danger"
+              >
+                Delete My Account
+              </button>
+            </div>
+          </div>
+        );
       } else {
         dashboardContent = (
           <div>
@@ -68,6 +98,7 @@ class Dashboard extends Component<Props, any> {
 
 (Dashboard as any).propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
 };
@@ -77,8 +108,6 @@ const mapStateToProps = (state: StateProps) => ({
   auth: state.auth
 });
 
-// const mapDispatchToProps = (dispatch: Dispatch<any>) => {
-//   return bindActionCreators({ getCurentProfile: getCurrentProfile }, dispatch);
-// };
-
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(
+  Dashboard
+);

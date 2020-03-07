@@ -24,20 +24,59 @@ export interface IUser {
   exp: number;
 }
 
-// export interface IProfile {
-//   profile: string;
-//   loading: boolean;
-// }
+export interface IExperience {
+  _id: string;
+  title: String;
+  company: String;
+  location: String;
+  description: string;
+  from: Date;
+  to: Date;
+}
+
+export interface IEducation {
+  _id: string;
+  school: string;
+  degree: string;
+  fieldofstudy: string;
+  from: Date;
+  to: Date;
+  current: string;
+  description: string;
+}
+
+export interface ISocial {
+  youtube: string;
+  twitter: string;
+  facebook: string;
+  linkedin: string;
+  instagram: string;
+}
+
+export interface IProfile {
+  // user: any;
+  handle: string;
+  company: string;
+  website: string;
+  location: string;
+  status: string;
+  skills: string[];
+  bio: string;
+  githubusername: string;
+  experience: IExperience[];
+  education: IEducation[];
+  social: ISocial;
+  // date: Date;
+}
 
 //TODO: properties should not be null
 export interface AuthState {
-  // type: ActionTypeKeys;
   isAuthenticatd?: boolean;
   user?: IUser;
 }
 
 export interface profileState {
-  profile?: any;
+  profile?: IProfile;
   profiles?: any;
   loading?: boolean;
 }

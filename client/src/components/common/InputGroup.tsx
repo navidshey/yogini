@@ -4,60 +4,57 @@ import PropTypes from "prop-types";
 
 interface IProps {
   name: string;
-  placeholder?: string;
+  placeholder: string;
   value: string;
-  label?: string;
   error?: String;
-  info?: string;
-  type?: string;
+  icon?: string;
+  type: string;
   onChange: any;
-  disabled?: boolean;
 }
 
-const TextFieldGroup = ({
+const InputGroup = ({
   name,
   placeholder,
   value,
-  label,
   error,
-  info,
+  icon,
   type,
-  onChange,
-  disabled
+  onChange
 }: IProps) => {
   return (
-    <div className="form-group">
+    <div className="input-group mb-3">
+      <div className="input-group-prepend">
+        <span className="input-group-text">
+          <i className={icon} />
+        </span>
+      </div>
       <input
-        type={type}
         className={classnames("form-control form-control-lg", {
           "is-invalid": error
         })}
         placeholder={placeholder}
         name={name}
         value={value}
-        disabled={disabled}
         onChange={onChange}
+        type={type}
       />
-      {info && <small className="form-text text-muted">{info}</small>}
       {error && <div className="invalid-feedback">{error} </div>}
     </div>
   );
 };
 
-(TextFieldGroup as any).propTypes = {
+(InputGroup as any).propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  label: PropTypes.string,
   value: PropTypes.string.isRequired,
-  info: PropTypes.string,
-  error: PropTypes.string,
+  icon: PropTypes.string,
   type: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.bool
+  error: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 };
 
-TextFieldGroup.defaultProps = {
+InputGroup.defaultProps = {
   type: "text"
 };
 
-export default TextFieldGroup;
+export default InputGroup;

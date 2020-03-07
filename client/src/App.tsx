@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -17,6 +17,10 @@ import "./App.css";
 import { clearCurrentProfile } from "./store/actions/profileActions";
 import Dashboard from "./components/dashboard/Dashboard";
 import PrivateRoute from "./components/common/PrivateRoute";
+import CreateProfile from "./components/profile/CreateProfile";
+import EditProfile from "./components/profile/EditProfile";
+import AddExperience from "./components/credentials/AddExperience";
+import AddEducation from "./components/credentials/AddEducation";
 
 //This is for reloading the page to user stay loged in
 if (localStorage.jwtToken) {
@@ -46,11 +50,41 @@ function App() {
               component={Register}
             />
             <Route exact path={ApplicationRoutes.LOGIN} component={Login} />
-            <PrivateRoute
-              exact
-              path={ApplicationRoutes.DASHBOARD}
-              component={Dashboard}
-            />
+            <Switch>
+              <PrivateRoute
+                exact
+                path={ApplicationRoutes.DASHBOARD}
+                component={Dashboard}
+              />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path={ApplicationRoutes.CREATEPROFILE}
+                component={CreateProfile}
+              />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path={ApplicationRoutes.EDITPROFILE}
+                component={EditProfile}
+              />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path={ApplicationRoutes.ADDEXPERIENCE}
+                component={AddExperience}
+              />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path={ApplicationRoutes.ADDEDUCATION}
+                component={AddEducation}
+              />
+            </Switch>
           </div>
           <Footer />
         </div>

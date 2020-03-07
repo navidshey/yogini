@@ -4,7 +4,7 @@ import { Document, model, Model, Schema, Types } from "mongoose";
 const schema: any = {
   user: {
     type: Schema.Types.ObjectId,
-    ref: "users"
+    ref: "User"
   },
   handle: {
     type: String,

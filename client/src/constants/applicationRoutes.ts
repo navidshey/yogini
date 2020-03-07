@@ -4,6 +4,9 @@ export enum ApplicationRoutes {
   LOGIN = "/login",
   PROFILE = "/profile",
   DASHBOARD = "/dashboard",
-  CREATEPROFILE = "/create-profile",
+  CREATEPROFILE = "/createprofile",
+  EDITPROFILE = "/editprofile",
+  ADDEXPERIENCE = "/addexperience",
+  ADDEDUCATION = "/addeducation",
   SERVEROOT = ""
 }
