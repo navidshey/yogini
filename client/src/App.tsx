@@ -21,6 +21,9 @@ import CreateProfile from "./components/profile/CreateProfile";
 import EditProfile from "./components/profile/EditProfile";
 import AddExperience from "./components/credentials/AddExperience";
 import AddEducation from "./components/credentials/AddEducation";
+import Profiles from "./components/profiles/Profiles";
+import Profile from "./components/profile/Profile";
+import NotFound from "./components/notfound/notFound";
 
 //This is for reloading the page to user stay loged in
 if (localStorage.jwtToken) {
@@ -50,6 +53,16 @@ function App() {
               component={Register}
             />
             <Route exact path={ApplicationRoutes.LOGIN} component={Login} />
+            <Route
+              exact
+              path={ApplicationRoutes.PROFILES}
+              component={Profiles}
+            />
+            <Route
+              exact
+              path={ApplicationRoutes.PROFILEHANDLE}
+              component={Profile}
+            />
             <Switch>
               <PrivateRoute
                 exact
@@ -85,6 +98,11 @@ function App() {
                 component={AddEducation}
               />
             </Switch>
+            <Route
+              exact
+              path={ApplicationRoutes.NOTFOUND}
+              component={NotFound}
+            />
           </div>
           <Footer />
         </div>

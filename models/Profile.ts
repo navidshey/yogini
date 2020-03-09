@@ -1,11 +1,14 @@
 // import * as mongoose from "mongoose";
 import { Document, model, Model, Schema, Types } from "mongoose";
+import { IUser } from "./User";
 
 const schema: any = {
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  },
+  user: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ],
   handle: {
     type: String,
     required: true,
@@ -119,7 +122,7 @@ const schema: any = {
 const ProfileSchema: Schema = new Schema(schema);
 
 export interface IProfile extends Document {
-  user: Types.ObjectId;
+  user: IUser;
   handle: string;
   company: string;
   website: string;

@@ -54,7 +54,8 @@ export interface ISocial {
 }
 
 export interface IProfile {
-  // user: any;
+  _id: string;
+  user: IUser;
   handle: string;
   company: string;
   website: string;

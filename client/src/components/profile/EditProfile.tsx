@@ -13,6 +13,7 @@ import {
   getCurrentProfile
 } from "../../store/actions/profileActions";
 import { isEmpty } from "../../validation/is-empty";
+import { ApplicationRoutes } from "../../constants";
 
 interface StateProps {
   profile: profileState;

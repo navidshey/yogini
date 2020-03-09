@@ -15,6 +15,12 @@ export default (state = initialState, action: ActionTypes): profileState => {
         profile: action.payload,
         loading: false
       };
+    case ActionTypeKeys.GET_PROFILES:
+      return {
+        ...state,
+        profiles: action.payload,
+        loading: false
+      };
     case ActionTypeKeys.CLEAR_CURRENT_PROFILE:
       return {
         ...state,

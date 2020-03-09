@@ -3,5 +3,7 @@ export enum ApiRoutes {
   LOGIN = "/api/users/login",
   PROFILE = "/api/profile",
   ADDEXPERIENCE = "/api/profile/experience",
-  ADDEDUCATION = "/api/profile/education"
+  ADDEDUCATION = "/api/profile/education",
+  GETPROFILES = "/api/profile/all",
+  GETPROFILEHANDLE = "/api/profile/handle"
 }

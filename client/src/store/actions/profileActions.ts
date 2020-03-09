@@ -23,6 +23,26 @@ export const getCurrentProfile = (): Dispatch<ActionTypes> => (
     );
 };
 
+export const getProfileByHandle = (handle: string): Dispatch<ActionTypes> => (
+  dispatch: any
+): any => {
+  dispatch(setProfileLoading());
+  axios
+    .get(`${ApiRoutes.GETPROFILEHANDLE}/${handle}`)
+    .then((res: AxiosResponse) =>
+      dispatch({
+        type: ActionTypeKeys.GET_PROFILE,
+        payload: res.data
+      })
+    )
+    .catch((err: AxiosError) =>
+      dispatch({
+        type: ActionTypeKeys.GET_PROFILE,
+        payload: null
+      })
+    );
+};
+
 export const createProfile = (profileData: any, history: any) => (
   dispatch: Dispatch<ActionTypes>
 ) => {
@@ -92,6 +112,24 @@ export const deleteEducation = (id: string) => (
     .then(res =>
       dispatch({
         type: ActionTypeKeys.GET_PROFILE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: ActionTypeKeys.GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const getProfiles = () => (dispatch: Dispatch<ActionTypes>) => {
+  dispatch(setProfileLoading());
+  axios
+    .get(ApiRoutes.GETPROFILES)
+    .then(res =>
+      dispatch({
+        type: ActionTypeKeys.GET_PROFILES,
         payload: res.data
       })
     )
