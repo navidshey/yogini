@@ -3,12 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import * as mongoose from "mongoose";
 const mongoose_1 = require("mongoose");
 const schema = {
-    user: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "User"
-        }
-    ],
+    user: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "User"
+    },
     handle: {
         type: String,
         required: true,

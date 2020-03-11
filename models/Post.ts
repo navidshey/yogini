@@ -1,4 +1,5 @@
 import { Document, model, Model, Schema, Types } from "mongoose";
+import { IUser } from "./User";
 
 const schema: any = {
   user: {
@@ -57,7 +58,8 @@ const schema: any = {
 const PostSchema: Schema = new Schema(schema);
 
 export interface IPost extends Document {
-  user: Types.ObjectId;
+  _id: Types.ObjectId;
+  user: Types.ObjectId | IUser;
   text: String;
   name: String;
   avatar: String;

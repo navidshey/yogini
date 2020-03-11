@@ -3,12 +3,10 @@ import { Document, model, Model, Schema, Types } from "mongoose";
 import { IUser } from "./User";
 
 const schema: any = {
-  user: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    }
-  ],
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
   handle: {
     type: String,
     required: true,
@@ -122,7 +120,8 @@ const schema: any = {
 const ProfileSchema: Schema = new Schema(schema);
 
 export interface IProfile extends Document {
-  user: IUser;
+  _id: Types.ObjectId;
+  user: Types.ObjectId | IUser;
   handle: string;
   company: string;
   website: string;

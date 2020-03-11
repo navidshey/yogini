@@ -22,7 +22,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => 
     console.log("start");
     const errors = {};
     Profile_1.Profile.findOne({ user: req.user.id })
-        .populate("User", ["name", "avatar"])
+        .populate("user", ["name", "avatar"])
         .then(profile => {
         if (!profile) {
             errors.noprofile = "there is no profile for the user";
@@ -38,9 +38,8 @@ router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => 
 router.get("/all", (req, res) => {
     const errors = {};
     Profile_1.Profile.find()
-        .populate("User", ["name", "avatar"])
+        .populate("user", ["name", "avatar"])
         .then(profiles => {
-        console.log(profiles);
         if (!profiles) {
             errors.noprofile = "there are no profiles";
             return res.status(404).json(errors);
@@ -57,7 +56,7 @@ router.get("/all", (req, res) => {
 router.get("/handle/:handle", (req, res) => {
     const errors = {};
     Profile_1.Profile.findOne({ handle: req.params.handle })
-        .populate("User", ["name", "avatar"])
+        .populate("user", ["name", "avatar"])
         .then(profile => {
         if (!profile) {
             errors.noprofile = "There is no profile for this user";
@@ -73,7 +72,7 @@ router.get("/handle/:handle", (req, res) => {
 router.get("/user/:user_id", (req, res) => {
     const errors = {};
     Profile_1.Profile.findOne({ user: req.params.user_id })
-        .populate("User", ["name", "avatar"])
+        .populate("user", ["name", "avatar"])
         .then(profile => {
         if (!profile) {
             errors.noprofile = "There is no profile for this user";
