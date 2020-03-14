@@ -8,7 +8,7 @@ import ProfileCreds from "./ProfileCreds";
 import ProfileAbout from "./ProfileAbout";
 import Spinner from "./../common/spinner";
 import { getProfileByHandle } from "../../store/actions/profileActions";
-import { profileState, IProfile } from "../../store/types";
+import { profileState } from "../../store/types";
 import { ApplicationRoutes } from "../../constants";
 
 interface StateProps {

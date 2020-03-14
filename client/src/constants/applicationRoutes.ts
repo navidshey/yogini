@@ -10,6 +10,8 @@ export enum ApplicationRoutes {
   EDITPROFILE = "/editprofile",
   ADDEXPERIENCE = "/addexperience",
   ADDEDUCATION = "/addeducation",
+  FEED = "/feed",
+  POST = "/post/:id",
   NOTFOUND = "/notfound",
   SERVEROOT = ""
 }

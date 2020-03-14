@@ -1,5 +1,6 @@
 import { ActionTypeKeys, ActionTypes, ICustomError } from "../types";
-const initialState: any = {};
+import { initialErrorState } from "./initialState";
+const initialState: any = initialErrorState;
 
 export default function(
   state = initialState,

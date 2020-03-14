@@ -1,6 +1,7 @@
 import { ActionTypeKeys, ActionTypes, profileState } from "../types";
+import { initialProfileState, initialProfile } from "./initialState";
 
-const initialState: profileState = {};
+const initialState: profileState = initialProfileState;
 
 export default (state = initialState, action: ActionTypes): profileState => {
   switch (action.type) {
@@ -24,7 +25,7 @@ export default (state = initialState, action: ActionTypes): profileState => {
     case ActionTypeKeys.CLEAR_CURRENT_PROFILE:
       return {
         ...state,
-        profile: undefined
+        profile: initialProfile
       };
     default:
       return state;

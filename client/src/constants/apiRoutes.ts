@@ -5,5 +5,9 @@ export enum ApiRoutes {
   ADDEXPERIENCE = "/api/profile/experience",
   ADDEDUCATION = "/api/profile/education",
   GETPROFILES = "/api/profile/all",
-  GETPROFILEHANDLE = "/api/profile/handle"
+  GETPROFILEHANDLE = "/api/profile/handle",
+  POST = "/api/posts",
+  POSTLIKE = "/api/posts/like",
+  POSTUNLIKE = "/api/posts/unlike",
+  POSTCOMMENT = "/api/posts/comment"
 }

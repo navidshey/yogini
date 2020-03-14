@@ -24,6 +24,8 @@ import AddEducation from "./components/credentials/AddEducation";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import NotFound from "./components/notfound/notFound";
+import Posts from "./components/posts/Posts";
+import Post from "./components/post/Post";
 
 //This is for reloading the page to user stay loged in
 if (localStorage.jwtToken) {
@@ -96,6 +98,20 @@ function App() {
                 exact
                 path={ApplicationRoutes.ADDEDUCATION}
                 component={AddEducation}
+              />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path={ApplicationRoutes.FEED}
+                component={Posts}
+              />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path={ApplicationRoutes.POST}
+                component={Post}
               />
             </Switch>
             <Route

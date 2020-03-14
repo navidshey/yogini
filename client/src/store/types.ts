@@ -12,15 +12,22 @@ export enum ActionTypeKeys {
   PROFILE_LOADING = "PROFILE_LOADING",
   PROFILE_NOT_FOUND = "PROFILE_NOT_FOUND",
   CLEAR_CURRENT_PROFILE = "CLEAR_CURRENT_PROFILE",
-  GET_PROFILES = "GET_PROFILES"
+  GET_PROFILES = "GET_PROFILES",
+  POST_LOADING = "POST_LOADING",
+  GET_POSTS = "GET_POSTS",
+  GET_POST = "GET_POST",
+  ADD_POST = "ADD_POST",
+  DELETE_POST = "DELETE_POST",
+  CLEAR_ERRORS = "CLEAR_ERRORS"
 }
 
 export interface IUser {
+  id: string;
   name: string;
   email: string;
   password: string;
   avatar: string;
-  date: Date;
+  date: string;
   exp: number;
 }
 
@@ -67,29 +74,68 @@ export interface IProfile {
   experience: IExperience[];
   education: IEducation[];
   social: ISocial;
-  // date: Date;
 }
 
-//TODO: properties should not be null
+export interface ICommentCreate {
+  text: string;
+  name: string;
+  avatar: string;
+}
+
+export interface IComment extends ICommentCreate {
+  _id: string;
+  user: string;
+  date?: Date;
+}
+
+export interface ILike {
+  user: string;
+}
+
+export interface IPostCreate {
+  text: string;
+  name: string;
+  avatar: string;
+}
+export interface IPost extends IPostCreate {
+  _id: string;
+  user: IUser;
+  likes: ILike[];
+  comments: IComment[];
+  date: string;
+}
+
 export interface AuthState {
-  isAuthenticatd?: boolean;
-  user?: IUser;
+  isAuthenticatd: boolean;
+  user: IUser;
 }
 
 export interface profileState {
-  profile?: IProfile;
-  profiles?: any;
-  loading?: boolean;
+  profile: IProfile;
+  profiles: IProfile[];
+  loading: boolean;
+}
+
+export interface postState {
+  posts: IPost[];
+  post: IPost;
+  loading: boolean;
 }
 
 export interface ICustomError {
   response: AxiosResponse;
 }
 
-//TODO: any should remove
 interface SendMessageAction {
   type: ActionTypeKeys;
-  payload?: IUser | ICustomError | AuthState | profileState | any;
+  payload?:
+    | IUser
+    | ICustomError
+    | AuthState
+    | profileState
+    | postState
+    | IPost
+    | any;
 }
 
 export type ActionTypes = SendMessageAction;

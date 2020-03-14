@@ -49,7 +49,6 @@ router.post(
   (req: Request, res: Response) => {
     const { errors, isValid } = validatePostInput(req.body);
 
-    console.log(req.body);
     // Check validation
     if (!isValid) {
       return res.status(400).json(errors);
@@ -62,7 +61,9 @@ router.post(
       user: req.user.id
     });
 
-    newPost.save().then(post => res.json(post));
+    newPost.save().then(post => {
+      res.json(post);
+    });
   }
 );
 

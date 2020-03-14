@@ -6,9 +6,10 @@ import jwt_decode from "jwt-decode";
 import { ApplicationRoutes, ApiRoutes, LocalStorage } from "./../../constants/";
 
 //TODO: dispatch types should be proper
-export const registerUser = (userData: any, history: any): Dispatch<any> => (
-  dispatch: any
-): any => {
+export const registerUser = (
+  userData: any,
+  history: any
+): Dispatch<ActionTypes> => (dispatch: any): any => {
   axios
     .post(ApiRoutes.REGISTER, userData)
     .then(() => history.push(ApplicationRoutes.LOGIN))
@@ -17,7 +18,7 @@ export const registerUser = (userData: any, history: any): Dispatch<any> => (
     });
 };
 
-export const loginUser = (userData: any): Dispatch<any> => (
+export const loginUser = (userData: any): Dispatch<ActionTypes> => (
   dispatch: any
 ): any => {
   axios
@@ -51,7 +52,7 @@ const catchError = (err: ICustomError): ActionTypes => {
   };
 };
 
-export const setCurrentUser = (decoded?: IUser): any => {
+export const setCurrentUser = (decoded?: IUser): ActionTypes => {
   return {
     type: ActionTypeKeys.SET_CURRENT_USER,
     payload: decoded

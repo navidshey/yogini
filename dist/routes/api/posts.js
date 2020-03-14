@@ -35,7 +35,6 @@ router.get("/:id", (req, res) => {
 // @access  private
 router.post("/", passport.authenticate("jwt", { session: false }), (req, res) => {
     const { errors, isValid } = post_2.validatePostInput(req.body);
-    console.log(req.body);
     // Check validation
     if (!isValid) {
         return res.status(400).json(errors);
@@ -46,7 +45,9 @@ router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
         avatar: req.body.avatar,
         user: req.user.id
     });
-    newPost.save().then(post => res.json(post));
+    newPost.save().then(post => {
+        res.json(post);
+    });
 });
 // @route   Delete api/posts/:id
 // @test    Delete post by id

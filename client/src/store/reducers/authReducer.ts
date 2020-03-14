@@ -1,11 +1,8 @@
 import { ActionTypeKeys, ActionTypes, AuthState } from "../types";
 import { isEmpty } from "../../validation/is-empty";
+import { initialAuthState } from "./initialState";
 
-const initialState: AuthState = {
-  isAuthenticatd: false,
-  user: undefined
-  // type: ActionTypeKeys.NOACTION
-};
+const initialState: AuthState = initialAuthState;
 
 export default function(state = initialState, action: ActionTypes): AuthState {
   switch (action.type) {
