@@ -1,28 +1,25 @@
 // https://github.com/validatorjs/validator.js
 import * as Validator from "validator";
 import { isEmpty } from "./is-empty";
+import { ILogin, ILoginErrors } from "../models/ILogin";
+import { LoginErrorMessages } from "../config/errorMessages";
 
-interface loginErrors {
-  email?: string;
-  password?: string;
-}
-
-export function validateLoginInput(data) {
-  let errors: loginErrors = {};
+export function validateLoginInput(data: ILogin) {
+  let errors: ILoginErrors = {};
 
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
 
   if (!Validator.isEmail(data.email)) {
-    errors.email = "Email is invalid";
+    errors.email = LoginErrorMessages.Email_Invalid;
   }
 
   if (Validator.isEmpty(data.email)) {
-    errors.email = "Email field is required";
+    errors.email = LoginErrorMessages.Email_Required;
   }
 
   if (Validator.isEmpty(data.password)) {
-    errors.password = "password field is required";
+    errors.password = LoginErrorMessages.Password_Required;
   }
 
   return {

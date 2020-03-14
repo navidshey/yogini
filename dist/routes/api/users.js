@@ -13,10 +13,7 @@ const register_1 = require("./../../validation/register");
 const login_1 = require("./../../validation/login");
 //Load user model
 const User_1 = require("../../models/User");
-// @route   Get api/users/test
-// @test    Test users route
-// @access  public
-router.get("/test", (req, res) => res.json({ msg: "users works" }));
+const errorMessages_1 = require("../../config/errorMessages");
 // @route   Post api/users/register
 // @test    register user
 // @access  public
@@ -28,7 +25,7 @@ router.post("/register", (req, res) => {
     }
     User_1.User.findOne({ email: req.body.email }, (err, user) => {
         if (user) {
-            errors.email = "Email already exists";
+            errors.email = errorMessages_1.UserErrorMessage.Already_Exist;
             return res.status(400).json({ errors });
         }
         else {
@@ -72,7 +69,7 @@ router.post("/login", (req, res) => {
     User_1.User.findOne({ email }, (err, user) => {
         // check for user
         if (!user) {
-            errors.email = "user not found";
+            errors.email = errorMessages_1.UserErrorMessage.Not_Found;
             return res.status(404).json(errors);
         }
         //check password
@@ -89,7 +86,7 @@ router.post("/login", (req, res) => {
                 });
             }
             else {
-                errors.password = "password incorrect";
+                errors.password = errorMessages_1.UserErrorMessage.Password_Incorrect;
                 return res.status(400).json(errors);
             }
         });

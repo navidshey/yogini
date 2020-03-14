@@ -15,13 +15,7 @@ import { validateLoginInput } from "./../../validation/login";
 
 //Load user model
 import { User, IUser } from "../../models/User";
-
-// @route   Get api/users/test
-// @test    Test users route
-// @access  public
-router.get("/test", (req: Request, res: Response) =>
-  res.json({ msg: "users works" })
-);
+import { UserErrorMessage } from "../../config/errorMessages";
 
 // @route   Post api/users/register
 // @test    register user
@@ -35,7 +29,7 @@ router.post("/register", (req: Request, res: Response) => {
   }
   User.findOne({ email: req.body.email }, (err: any, user: IUser) => {
     if (user) {
-      errors.email = "Email already exists";
+      errors.email = UserErrorMessage.Already_Exist;
       return res.status(400).json({ errors });
     } else {
       const avatar = gravatar.url(req.body.email, {
@@ -43,7 +37,7 @@ router.post("/register", (req: Request, res: Response) => {
         r: "pg", //rating
         d: "mm" //Default
       });
-      const newUser = new User({
+      const newUser: IUser = new User({
         name: req.body.name,
         email: req.body.email,
         avatar,
@@ -82,7 +76,7 @@ router.post("/login", (req: Request, res: Response) => {
   User.findOne({ email }, (err: any, user: IUser) => {
     // check for user
     if (!user) {
-      errors.email = "user not found";
+      errors.email = UserErrorMessage.Not_Found;
       return res.status(404).json(errors);
     }
 
@@ -106,7 +100,7 @@ router.post("/login", (req: Request, res: Response) => {
           }
         );
       } else {
-        errors.password = "password incorrect";
+        errors.password = UserErrorMessage.Password_Incorrect;
         return res.status(400).json(errors);
       }
     });

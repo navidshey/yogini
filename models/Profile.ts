@@ -1,6 +1,9 @@
 // import * as mongoose from "mongoose";
 import { Document, model, Model, Schema, Types } from "mongoose";
 import { IUser } from "./User";
+import { IExperience } from "./IExperience";
+import { IEducation } from "./IEducation";
+import { ISocial } from "./ISocial";
 
 const schema: any = {
   user: {
@@ -130,37 +133,23 @@ export interface IProfile extends Document {
   skills: String;
   bio: String;
   githubusername: String;
-  experience: {
-    id: string;
-    title: String;
-    company: String;
-    location: String;
-    from: Date;
-    to: Date;
-    current: boolean;
-    description: string;
-  }[];
-  education: {
-    id: string;
-    school: string;
-    degree: string;
-    fieldofstudy: string;
-    from: Date;
-    to: Date;
-    current: string;
-    description: string;
-  }[];
-  social: {
-    youtube: string;
-    twitter: string;
-    facebook: string;
-    linkedin: string;
-    instagram: string;
-  };
+  experience: IExperience[];
+  education: IEducation[];
+  social: ISocial;
   date: Date;
 }
 
-// export const Profile = model("profile", ProfileSchema);
+export interface IProfileErrors {
+  handle?: string;
+  status?: String;
+  skills?: String;
+  website?: string;
+  youtube?: string;
+  twitter?: string;
+  linkedin?: string;
+  instagram?: string;
+  facebook?: string;
+}
 
 export const Profile: Model<IProfile> = model<IProfile>(
   "Profile",

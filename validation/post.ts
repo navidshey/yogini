@@ -1,27 +1,29 @@
 // https://github.com/validatorjs/validator.js
 import * as Validator from "validator";
 import { isEmpty } from "./is-empty";
+import { IPost, IpostErrors } from "../models/Post";
+import { PostErrorMessages } from "../config/errorMessages";
 
-export function validatePostInput(data) {
-  let errors: any = {};
+export const validatePostInput = (data: IPost) => {
+  let errors: IpostErrors = {};
 
   data.text = !isEmpty(data.text) ? data.text : "";
   data.name = !isEmpty(data.name) ? data.name : "";
 
   if (Validator.isEmpty(data.text)) {
-    errors.text = "Text field is required";
+    errors.text = PostErrorMessages.Text_Required;
   }
 
   if (!Validator.isLength(data.text, { min: 10, max: 300 })) {
-    errors.text = "Post must be between 10 t0 300 characters";
+    errors.text = PostErrorMessages.Text_Length;
   }
 
   if (Validator.isEmpty(data.name)) {
-    errors.name = "name field is required";
+    errors.name = PostErrorMessages.Name_Required;
   }
 
   return {
     errors,
     isValid: isEmpty(errors)
   };
-}
+};

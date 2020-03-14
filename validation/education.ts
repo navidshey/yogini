@@ -1,33 +1,35 @@
 // https://github.com/validatorjs/validator.js
 import * as Validator from "validator";
 import { isEmpty } from "./is-empty";
+import { IEducation, IEducationErrors } from "../models/IEducation";
+import { EducationErrorMessages } from "../config/errorMessages";
 
-export function validateEducationInput(data: any) {
-  let errors: any = {};
+export const validateEducationInput = (data: IEducation) => {
+  let errors: IEducationErrors = {};
 
   data.school = !isEmpty(data.school) ? data.school : "";
   data.degree = !isEmpty(data.degree) ? data.degree : "";
   data.fieldofstudy = !isEmpty(data.fieldofstudy) ? data.fieldofstudy : "";
-  data.from = !isEmpty(data.from) ? data.from : "";
+  data.from = !isEmpty(data.from) ? data.from : null;
 
   if (Validator.isEmpty(data.school)) {
-    errors.school = "School field is required";
+    errors.school = EducationErrorMessages.School_Required;
   }
 
   if (Validator.isEmpty(data.degree)) {
-    errors.degree = "degree field is required";
+    errors.degree = EducationErrorMessages.Degree_Required;
   }
 
   if (Validator.isEmpty(data.fieldofstudy)) {
-    errors.fieldofstudy = "Field of study field is required";
+    errors.fieldofstudy = EducationErrorMessages.Fieldofstudy_Required;
   }
 
   if (Validator.isEmpty(data.from)) {
-    errors.from = "From date field is required";
+    errors.from = EducationErrorMessages.From_Required;
   }
 
   return {
     errors,
     isValid: isEmpty(errors)
   };
-}
+};

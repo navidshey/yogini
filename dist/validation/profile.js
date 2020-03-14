@@ -3,51 +3,52 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // https://github.com/validatorjs/validator.js
 const Validator = require("validator");
 const is_empty_1 = require("./is-empty");
+const errorMessages_1 = require("../config/errorMessages");
 function validateProfileInput(data) {
     let errors = {};
     data.handle = !is_empty_1.isEmpty(data.handle) ? data.handle : "";
     data.status = !is_empty_1.isEmpty(data.status) ? data.status : "";
     data.skills = !is_empty_1.isEmpty(data.skills) ? data.skills : "";
     if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
-        errors.handle = "Handle needs to be between 2 and 40 chars";
+        errors.handle = errorMessages_1.ProfileErrorMessages.Handle_Length;
     }
     if (Validator.isEmpty(data.handle)) {
-        errors.handle = "Profile handle is required";
+        errors.handle = errorMessages_1.ProfileErrorMessages.Handle_Required;
     }
     if (Validator.isEmpty(data.status)) {
-        errors.status = "status field is required";
+        errors.status = errorMessages_1.ProfileErrorMessages.Status_Required;
     }
     if (Validator.isEmpty(data.skills)) {
-        errors.skills = "skills field is required";
+        errors.skills = errorMessages_1.ProfileErrorMessages.Skills_Required;
     }
     if (!is_empty_1.isEmpty(data.website)) {
         if (!Validator.isURL(data.website)) {
-            errors.website = "Not valid Url";
+            errors.website = errorMessages_1.ProfileErrorMessages.Website_Invalid;
         }
     }
     if (!is_empty_1.isEmpty(data.youtube)) {
         if (!Validator.isURL(data.youtube)) {
-            errors.youtube = "Not valid Url";
+            errors.youtube = errorMessages_1.ProfileErrorMessages.Youtube_Invalid;
         }
     }
     if (!is_empty_1.isEmpty(data.twitter)) {
         if (!Validator.isURL(data.twitter)) {
-            errors.twitter = "Not valid Url";
+            errors.twitter = errorMessages_1.ProfileErrorMessages.Twitter_Invalid;
         }
     }
     if (!is_empty_1.isEmpty(data.facebook)) {
         if (!Validator.isURL(data.facebook)) {
-            errors.facebook = "Not valid Url";
+            errors.facebook = errorMessages_1.ProfileErrorMessages.Facebook_Invalid;
         }
     }
     if (!is_empty_1.isEmpty(data.linkedin)) {
         if (!Validator.isURL(data.linkedin)) {
-            errors.linkedin = "Not valid Url";
+            errors.linkedin = errorMessages_1.ProfileErrorMessages.Linkedin_Invalid;
         }
     }
     if (!is_empty_1.isEmpty(data.instagram)) {
         if (!Validator.isURL(data.instagram)) {
-            errors.instagram = "Not valid Url";
+            errors.instagram = errorMessages_1.ProfileErrorMessages.Instagram_Invalid;
         }
     }
     return {

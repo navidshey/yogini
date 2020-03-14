@@ -1,5 +1,7 @@
 import { Document, model, Model, Schema, Types } from "mongoose";
 import { IUser } from "./User";
+import { IComment } from "./Icomment";
+import { ILike } from "./ILike";
 
 const schema: any = {
   user: {
@@ -63,19 +65,14 @@ export interface IPost extends Document {
   text: String;
   name: String;
   avatar: String;
-  likes: {
-    user: Types.ObjectId;
-  }[];
-  comments: {
-    _id?: string;
-    user: Types.ObjectId;
-    text: String;
-    name: String;
-    avatar: String;
-    date?: Date;
-  }[];
+  likes: ILike[];
+  comments: IComment[];
   date: Date;
 }
-// export const Post = mongoose.model("post", PostSchema);
+
+export interface IpostErrors {
+  text?: string;
+  name?: string;
+}
 
 export const Post: Model<IPost> = model<IPost>("Post", PostSchema);

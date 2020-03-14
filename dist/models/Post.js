@@ -55,5 +55,4 @@ const schema = {
 };
 // Create Scheme
 const PostSchema = new mongoose_1.Schema(schema);
-// export const Post = mongoose.model("post", PostSchema);
 exports.Post = mongoose_1.model("Post", PostSchema);

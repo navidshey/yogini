@@ -3,27 +3,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // https://github.com/validatorjs/validator.js
 const Validator = require("validator");
 const is_empty_1 = require("./is-empty");
-function validateEducationInput(data) {
+const errorMessages_1 = require("../config/errorMessages");
+exports.validateEducationInput = (data) => {
     let errors = {};
     data.school = !is_empty_1.isEmpty(data.school) ? data.school : "";
     data.degree = !is_empty_1.isEmpty(data.degree) ? data.degree : "";
     data.fieldofstudy = !is_empty_1.isEmpty(data.fieldofstudy) ? data.fieldofstudy : "";
-    data.from = !is_empty_1.isEmpty(data.from) ? data.from : "";
+    data.from = !is_empty_1.isEmpty(data.from) ? data.from : null;
     if (Validator.isEmpty(data.school)) {
-        errors.school = "School field is required";
+        errors.school = errorMessages_1.EducationErrorMessages.School_Required;
     }
     if (Validator.isEmpty(data.degree)) {
-        errors.degree = "degree field is required";
+        errors.degree = errorMessages_1.EducationErrorMessages.Degree_Required;
     }
     if (Validator.isEmpty(data.fieldofstudy)) {
-        errors.fieldofstudy = "Field of study field is required";
+        errors.fieldofstudy = errorMessages_1.EducationErrorMessages.Fieldofstudy_Required;
     }
     if (Validator.isEmpty(data.from)) {
-        errors.from = "From date field is required";
+        errors.from = errorMessages_1.EducationErrorMessages.From_Required;
     }
     return {
         errors,
         isValid: is_empty_1.isEmpty(errors)
     };
-}
-exports.validateEducationInput = validateEducationInput;
+};

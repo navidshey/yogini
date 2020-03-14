@@ -12,13 +12,9 @@ import { validateEducationInput } from "./../../validation/education";
 import { Profile, IProfile } from "../../models/Profile";
 // Load User Profile
 import { User } from "../../models/User";
-
-// @route   Get api/profile/test
-// @test    Test profiles route
-// @access  public
-router.get("/test", (req: Request, res: Response) =>
-  res.json({ msg: "profiles works" })
-);
+import { IEducation } from "../../models/IEducation";
+import { ProfileErrorMessages } from "../../config/errorMessages";
+import { IExperience } from "../../models/IExperience";
 
 // @route   Get api/profile
 // @test    Get current user profile
@@ -33,7 +29,7 @@ router.get(
       .populate("user", ["name", "avatar"])
       .then(profile => {
         if (!profile) {
-          errors.noprofile = "there is no profile for the user";
+          errors.noprofile = ProfileErrorMessages.No_Profile;
           return res.status(404).json(errors);
         }
         res.json(profile);
@@ -51,14 +47,14 @@ router.get("/all", (req: Request, res: Response) => {
     .populate("user", ["name", "avatar"])
     .then(profiles => {
       if (!profiles) {
-        errors.noprofile = "there are no profiles";
+        errors.noprofile = ProfileErrorMessages.No_Profiles;
         return res.status(404).json(errors);
       }
       res.json(profiles);
     })
     .catch(err =>
       res.status(400).json({
-        profile: "There are no profile"
+        profile: ProfileErrorMessages.No_Profiles
       })
     );
 });
@@ -72,7 +68,7 @@ router.get("/handle/:handle", (req: Request, res: Response) => {
     .populate("user", ["name", "avatar"])
     .then(profile => {
       if (!profile) {
-        errors.noprofile = "There is no profile for this user";
+        errors.noprofile = ProfileErrorMessages.No_Profile;
         res.status(400).json(errors);
       }
       res.json(profile);
@@ -89,14 +85,14 @@ router.get("/user/:user_id", (req: Request, res: Response) => {
     .populate("user", ["name", "avatar"])
     .then(profile => {
       if (!profile) {
-        errors.noprofile = "There is no profile for this user";
+        errors.noprofile = ProfileErrorMessages.No_Profile;
         res.status(400).json(errors);
       }
       res.json(profile);
     })
     .catch(err =>
       res.status(400).json({
-        profile: "There is no profile for this user"
+        profile: ProfileErrorMessages.No_Profile
       })
     );
 });
@@ -117,7 +113,7 @@ router.post(
     }
 
     // Get fields
-    const profileFields: any = {};
+    const profileFields: IProfile | any = {};
     profileFields.user = req.user.id;
     if (req.body.handle) profileFields.handle = req.body.handle;
     if (req.body.company) profileFields.company = req.body.company;
@@ -153,7 +149,7 @@ router.post(
         // check if handle exist
         Profile.findOne({ handle: profileFields.handle }).then(profile => {
           if (profile) {
-            errors.handle = "that handle already exist";
+            errors.handle = ProfileErrorMessages.Handle_Already_Exist;
             res.status(400).json(errors);
           }
 
@@ -180,7 +176,7 @@ router.post(
     }
 
     Profile.findOne({ user: req.user.id }, (err: any, profile: IProfile) => {
-      const newExp = {
+      const newExp: IExperience = {
         id: req.body.id,
         title: req.body.title,
         company: req.body.company,
@@ -198,25 +194,6 @@ router.post(
       profile.experience.unshift(newExp);
       profile.save().then(profile => res.json(profile));
     });
-
-    // Profile.findOne({ user: req.user.id }).then(profile:IProfile => {
-    //   const newExp = {
-    //     title: req.body.title,
-    //     company: req.body.company,
-    //     location: req.body.location,
-    //     from: req.body.from,
-    //     to: req.body.to,
-    //     current: req.body.current,
-    //     description: req.body.description
-    //   };
-
-    //   // add to exp array
-    //   //unshif add to begening
-    //   //push add to the end
-    //   if (!profile.experience) profile.experience = [];
-    //   profile.experience.unshift(newExp);
-    //   profile.save().then(profile => res.json(profile));
-    // });
   }
 );
 
@@ -234,7 +211,7 @@ router.post(
       return res.status(400).json(errors);
     }
     Profile.findOne({ user: req.user.id }, (err: any, profile: IProfile) => {
-      const newEdu = {
+      const newEdu: IEducation = {
         id: req.body.id,
         school: req.body.school,
         degree: req.body.degree,

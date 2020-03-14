@@ -1,9 +1,11 @@
 // https://github.com/Validatorjs/Validator.js
 import * as Validator from "Validator";
 import { isEmpty } from "./is-empty";
+import { IRegister, IRegisterErrors } from "../models/IRegister";
+import { RegisterErrorMessages } from "../config/errorMessages";
 
-export function validateRegisterInput(data) {
-  let errors: any = {};
+export function validateRegisterInput(data: IRegister) {
+  let errors: IRegisterErrors = {};
 
   data.name = !isEmpty(data.name) ? data.name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
@@ -11,31 +13,31 @@ export function validateRegisterInput(data) {
   data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
   if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
-    errors.name = "Name must be between 2 and 30 characters";
+    errors.name = RegisterErrorMessages.Name_Length;
   }
   if (Validator.isEmpty(data.name)) {
-    errors.name = "Name field is required";
+    errors.name = RegisterErrorMessages.Name_Required;
   }
 
   if (!Validator.isEmail(data.email)) {
-    errors.email = "Email is invalid";
+    errors.email = RegisterErrorMessages.Email_Invalid;
   }
   if (Validator.isEmpty(data.email)) {
-    errors.email = "Email field is required";
+    errors.email = RegisterErrorMessages.Email_Required;
   }
 
   if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = "Password must be between 6 and 30 characters";
+    errors.password = RegisterErrorMessages.Password_Length;
   }
   if (Validator.isEmpty(data.password)) {
-    errors.password = "password field is required";
+    errors.password = RegisterErrorMessages.Password_Required;
   }
 
   if (!Validator.equals(data.password, data.password2)) {
-    errors.password2 = "passwords must match";
+    errors.password2 = RegisterErrorMessages.Password_Not_Matched;
   }
   if (Validator.isEmpty(data.password2)) {
-    errors.password2 = "Confirm password field is required";
+    errors.password2 = RegisterErrorMessages.Confirm_Password_Required;
   }
 
   return {

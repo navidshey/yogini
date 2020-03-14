@@ -118,5 +118,4 @@ const schema = {
 };
 // Create Scheme
 const ProfileSchema = new mongoose_1.Schema(schema);
-// export const Profile = model("profile", ProfileSchema);
 exports.Profile = mongoose_1.model("Profile", ProfileSchema);

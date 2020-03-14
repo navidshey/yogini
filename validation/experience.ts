@@ -1,28 +1,30 @@
 // https://github.com/validatorjs/validator.js
 import * as Validator from "validator";
 import { isEmpty } from "./is-empty";
+import { IExperience, IExperienceErrors } from "../models/IExperience";
+import { ExperienceErrorMessages } from "../config/errorMessages";
 
-export function validateExperienceInput(data) {
-  let errors: any = {};
+export const validateExperienceInput = (data: IExperience) => {
+  let errors: IExperienceErrors = {};
 
   data.title = !isEmpty(data.title) ? data.title : "";
   data.company = !isEmpty(data.company) ? data.company : "";
-  data.from = !isEmpty(data.from) ? data.from : "";
+  data.from = !isEmpty(data.from) ? data.from : null;
 
   if (Validator.isEmpty(data.title)) {
-    errors.title = "Job title field is required";
+    errors.title = ExperienceErrorMessages.Title_Required;
   }
 
   if (Validator.isEmpty(data.company)) {
-    errors.company = "company field is required";
+    errors.company = ExperienceErrorMessages.Company_Required;
   }
 
   if (Validator.isEmpty(data.from)) {
-    errors.from = "From date field is required";
+    errors.from = ExperienceErrorMessages.From_Required;
   }
 
   return {
     errors,
     isValid: isEmpty(errors)
   };
-}
+};

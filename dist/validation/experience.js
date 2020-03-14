@@ -3,23 +3,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // https://github.com/validatorjs/validator.js
 const Validator = require("validator");
 const is_empty_1 = require("./is-empty");
-function validateExperienceInput(data) {
+const errorMessages_1 = require("../config/errorMessages");
+exports.validateExperienceInput = (data) => {
     let errors = {};
     data.title = !is_empty_1.isEmpty(data.title) ? data.title : "";
     data.company = !is_empty_1.isEmpty(data.company) ? data.company : "";
-    data.from = !is_empty_1.isEmpty(data.from) ? data.from : "";
+    data.from = !is_empty_1.isEmpty(data.from) ? data.from : null;
     if (Validator.isEmpty(data.title)) {
-        errors.title = "Job title field is required";
+        errors.title = errorMessages_1.ExperienceErrorMessages.Title_Required;
     }
     if (Validator.isEmpty(data.company)) {
-        errors.company = "company field is required";
+        errors.company = errorMessages_1.ExperienceErrorMessages.Company_Required;
     }
     if (Validator.isEmpty(data.from)) {
-        errors.from = "From date field is required";
+        errors.from = errorMessages_1.ExperienceErrorMessages.From_Required;
     }
     return {
         errors,
         isValid: is_empty_1.isEmpty(errors)
     };
-}
-exports.validateExperienceInput = validateExperienceInput;
+};
