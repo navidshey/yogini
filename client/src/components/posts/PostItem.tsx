@@ -32,6 +32,12 @@ class PostItem extends Component<Prop, State> {
     showActions: true
   };
 
+  componentWillReceiveProps(nextProps: Prop) {
+    if (nextProps.post) {
+      this.setState({ post: nextProps.post });
+    }
+  }
+
   onDeleteClick(id: string) {
     this.props.deletePost(id);
   }
@@ -50,6 +56,15 @@ class PostItem extends Component<Prop, State> {
       return true;
     } else {
       return false;
+    }
+  }
+
+  isCurrentUserLike(likes: ILike[]) {
+    const { auth } = this.props;
+    if (likes.filter(like => like.user === (auth.user as any).id).length > 0) {
+      return <i className="fas fa-thumbs-up text-info" />;
+    } else {
+      return <i className="fas fa-thumbs-up" />;
     }
   }
 
@@ -79,11 +94,12 @@ class PostItem extends Component<Prop, State> {
                   type="button"
                   className="btn btn-light mr-1"
                 >
-                  <i
+                  <span> {this.isCurrentUserLike(post.likes)}</span>
+                  {/* <i
                     className={classnames("fas fa-thumbs-up", {
                       "text-info": this.findUserLike(post.likes)
                     })}
-                  />
+                  /> */}
                   <span className="badge badge-light">{post.likes.length}</span>
                 </button>
                 <button

@@ -66,7 +66,13 @@ export const deletePost = (id: string) => (dispatch: Dispatch<ActionTypes>) => {
 export const addLike = (id: string) => (dispatch: Dispatch<ActionTypes>) => {
   axios
     .post(`${ApiRoutes.POSTLIKE}/${id}`)
-    .then(res => dispatch(getPosts() as any))
+    // .then(res => dispatch(getPosts() as any))
+    .then(res =>
+      dispatch({
+        type: ActionTypeKeys.POST_LIKED,
+        payload: res.data
+      })
+    )
     .catch(err =>
       dispatch({
         type: ActionTypeKeys.GET_ERRORS,
@@ -78,7 +84,12 @@ export const addLike = (id: string) => (dispatch: Dispatch<ActionTypes>) => {
 export const removeLike = (id: string) => (dispatch: Dispatch<ActionTypes>) => {
   axios
     .post(`${ApiRoutes.POSTUNLIKE}/${id}`)
-    .then(res => dispatch(getPosts() as any))
+    .then(res =>
+      dispatch({
+        type: ActionTypeKeys.POST_LIKED,
+        payload: res.data
+      })
+    )
     .catch(err =>
       dispatch({
         type: ActionTypeKeys.GET_ERRORS,

@@ -6,6 +6,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./store/actions/authActions";
 import { IUser } from "./store/types";
 import store from "./store/store";
+import { enableAllPlugins } from "immer";
 
 import NavBar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -26,6 +27,9 @@ import Profile from "./components/profile/Profile";
 import NotFound from "./components/notfound/notFound";
 import Posts from "./components/posts/Posts";
 import Post from "./components/post/Post";
+
+//start immer
+enableAllPlugins();
 
 //This is for reloading the page to user stay loged in
 if (localStorage.jwtToken) {
