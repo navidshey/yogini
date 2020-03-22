@@ -1,5 +1,5 @@
 // https://github.com/validatorjs/validator.js
-import * as Validator from "validator";
+import Validator from "validator";
 import { isEmpty } from "./is-empty";
 import { IEducation, IEducationErrors } from "../models/IEducation";
 import { EducationErrorMessages } from "../config/errorMessages";
@@ -24,7 +24,7 @@ export const validateEducationInput = (data: IEducation) => {
     errors.fieldofstudy = EducationErrorMessages.Fieldofstudy_Required;
   }
 
-  if (Validator.isEmpty(data.from)) {
+  if (Validator.isEmpty(data.from.toString())) {
     errors.from = EducationErrorMessages.From_Required;
   }
 

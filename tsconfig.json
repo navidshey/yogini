@@ -12,6 +12,7 @@
     "./models/**/*",
     "./routes/**/*",
     "./validation/**/*",
+    "app.ts",
     "server.ts"
   ]
 }

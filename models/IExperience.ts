@@ -1,8 +1,8 @@
 export interface IExperience {
   id: string;
-  title: String;
-  company: String;
-  location: String;
+  title: string;
+  company: string;
+  location: string;
   from?: Date;
   to: Date;
   current: boolean;

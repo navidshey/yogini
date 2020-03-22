@@ -1,5 +1,5 @@
 // https://github.com/validatorjs/validator.js
-import * as Validator from "validator";
+import Validator from "validator";
 import { isEmpty } from "./is-empty";
 import { IProfile, IProfileErrors } from "../models/Profile";
 import { ProfileErrorMessages } from "../config/errorMessages";

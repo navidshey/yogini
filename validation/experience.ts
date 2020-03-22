@@ -1,5 +1,5 @@
 // https://github.com/validatorjs/validator.js
-import * as Validator from "validator";
+import Validator from "validator";
 import { isEmpty } from "./is-empty";
 import { IExperience, IExperienceErrors } from "../models/IExperience";
 import { ExperienceErrorMessages } from "../config/errorMessages";
@@ -19,7 +19,7 @@ export const validateExperienceInput = (data: IExperience) => {
     errors.company = ExperienceErrorMessages.Company_Required;
   }
 
-  if (Validator.isEmpty(data.from)) {
+  if (Validator.isEmpty(data.from.toString())) {
     errors.from = ExperienceErrorMessages.From_Required;
   }
 

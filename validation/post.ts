@@ -1,5 +1,5 @@
 // https://github.com/validatorjs/validator.js
-import * as Validator from "validator";
+import Validator from "validator";
 import { isEmpty } from "./is-empty";
 import { IPost, IpostErrors } from "../models/Post";
 import { PostErrorMessages } from "../config/errorMessages";

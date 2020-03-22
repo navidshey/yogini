@@ -62,9 +62,9 @@ const PostSchema: Schema = new Schema(schema);
 export interface IPost extends Document {
   _id: Types.ObjectId;
   user: Types.ObjectId | IUser;
-  text: String;
-  name: String;
-  avatar: String;
+  text: string;
+  name: string;
+  avatar: string;
   likes: ILike[];
   comments: IComment[];
   date: Date;

@@ -1,223 +1,67 @@
-import { Request, Response } from "express";
 import * as express from "express";
-import * as mongoose from "mongoose";
-const router = express.Router();
-const passport = require("passport");
+import PostsController from "../controllers/posts";
 
-// Post model
-import { Post, IPost } from "../../models/post";
-import { Profile, IProfile } from "../../models/Profile";
+export default class postsApi {
+  private postsController: PostsController = new PostsController();
+  private router = express.Router();
+  private passport = require("passport");
 
-// Post validation
-import { validatePostInput } from "./../../validation/post";
-import {
-  PostErrorMessages,
-  UserErrorMessage
-} from "../../config/errorMessages";
-import { IComment } from "../../models/Icomment";
-
-// @route   Get api/posts
-// @test    Get post
-// @access  public
-router.get("/", (req: Request, res: Response) => {
-  Post.find()
-    .sort({ date: -1 })
-    .then(posts => res.json(posts))
-    .catch(err =>
-      res.status(404).json({ noPostsFound: PostErrorMessages.Post_Not_Found })
-    );
-});
-
-// @route   Get api/posts/:id
-// @test    Get post by id
-// @access  public
-router.get("/:id", (req: Request, res: Response) => {
-  Post.findById(req.params.id)
-    .then(posts => res.json(posts))
-    .catch(err =>
-      res
-        .status(404)
-        .json({ noPostFound: PostErrorMessages.Post_Not_Found_With_Id })
-    );
-});
-
-// @route   Post api/posts
-// @test    Create post
-// @access  private
-router.post(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  (req: Request, res: Response) => {
-    const { errors, isValid } = validatePostInput(req.body);
-
-    // Check validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
-    const newPost: IPost = new Post({
-      text: req.body.text,
-      name: req.body.name,
-      avatar: req.body.avatar,
-      user: req.user.id
-    });
-
-    newPost.save().then(post => {
-      res.json(post);
-    });
-  }
-);
-
-// @route   Delete api/posts/:id
-// @test    Delete post by id
-// @access  private
-router.delete(
-  "/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req: Request, res: Response) => {
-    Profile.findOne({ user: req.user.id }, (err: any, profile: IProfile) => {
-      Post.findById(req.params.id, (err: any, post: IPost) => {
-        // check for post owner
-        if (post.user.toString() !== req.user.id) {
-          return res
-            .status(401)
-            .json({ notAuthorize: UserErrorMessage.Not_Authorize });
-        }
-
-        // Delete post
-        post.remove().then(() => res.json({ success: true }));
-      }).catch(err =>
-        res.status(404).json({ postnotfound: PostErrorMessages.Post_Not_Found })
-      );
-    });
-  }
-);
-
-// @route   Post api/posts/like/:id
-// @test    Like post by id
-// @access  private
-router.post(
-  "/like/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req: Request, res: Response) => {
-    Profile.findOne({ user: req.user.id }, (err: any, profile: IProfile) => {
-      Post.findById(req.params.id, (err: any, post: IPost) => {
-        if (
-          post.likes.filter(like => like.user.toString() === req.user.id)
-            .length > 0
-        ) {
-          return res
-            .status(400)
-            .json({ alreadyLiked: PostErrorMessages.User_Already_Liked });
-        }
-
-        // Add user id  to like array
-        post.likes.unshift({ user: mongoose.Types.ObjectId(req.user.id) });
-
-        post.save().then(post => res.json(post));
-      }).catch(err =>
-        res.status(404).json({ postnotfound: PostErrorMessages.Post_Not_Found })
-      );
-    });
-  }
-);
-
-// @route   Post api/posts/unlike/:id
-// @test    unLike post by id
-// @access  private
-router.post(
-  "/unlike/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req: Request, res: Response) => {
-    Profile.findOne({ user: req.user.id }, (err: any, profile: IProfile) => {
-      Post.findById(req.params.id, (err: any, post: IPost) => {
-        if (
-          post.likes.filter(like => like.user.toString() === req.user.id)
-            .length === 0
-        ) {
-          return res
-            .status(400)
-            .json({ alreadyLiked: PostErrorMessages.Not_Liked_Yet });
-        }
-
-        // Get the removed index
-        const removeIndex = post.likes
-          .map(item => item.user.toString())
-          .indexOf(req.user.id);
-
-        //splice out of array
-        post.likes.splice(removeIndex, 1);
-
-        post.save().then(post => res.json(post));
-      }).catch(err =>
-        res.status(404).json({ postnotfound: PostErrorMessages.Post_Not_Found })
-      );
-    });
-  }
-);
-
-// @route   Post api/posts/comment/:id
-// @test    add comment to post
-// @access  private
-router.post(
-  "/comment/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req: Request, res: Response) => {
-    const { errors, isValid } = validatePostInput(req.body);
-
-    // Check validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
-    Post.findById(req.params.id)
-      .then(post => {
-        const newComment: IComment = {
-          text: req.body.text,
-          name: req.body.name,
-          avatar: req.body.avatar,
-          user: mongoose.Types.ObjectId(req.user.id)
-        };
-
-        post.comments.unshift(newComment);
-        post.save().then(post => res.json(post));
+  public routes() {
+    this.router
+      .get("/", (req, res) => {
+        this.postsController.get(req, res);
       })
-      .catch(err =>
-        res.status(404).json({ postnotfound: PostErrorMessages.Post_Not_Found })
-      );
-  }
-);
-
-// @route   Delete api/posts/comment/:id/:comment_id
-// @test    remove comment from post
-// @access  private
-router.delete(
-  "/comment/:id/:comment_id",
-  passport.authenticate("jwt", { session: false }),
-  (req: Request, res: Response) => {
-    Post.findById(req.params.id)
-      .then(post => {
-        // check to see if comment exist
-
-        if (
-          post.comments.filter(
-            comment => comment._id.toString() === req.params.comment_id
-          ).length === 0
-        ) {
-          return res
-            .status(404)
-            .json({ commentnotexist: PostErrorMessages.Comment_Not_Exist });
+      .post(
+        "/",
+        this.passport.authenticate("jwt", { session: false }),
+        (req, res) => {
+          this.postsController.create(req, res);
         }
-
-        const removeIndex = post.comments
-          .map(item => item._id.toString())
-          .indexOf(req.params.comment_id);
-        post.comments.splice(removeIndex, 1);
-        post.save().then(post => res.json(post));
-      })
-      .catch(err =>
-        res.status(404).json({ postnotfound: PostErrorMessages.Post_Not_Found })
       );
+
+    this.router
+      .get("/:id", (req, res) => {
+        this.postsController.getById(req, res);
+      })
+      .delete(
+        "/:id",
+        this.passport.authenticate("jwt", { session: false }),
+        (req, res) => {
+          this.postsController.delete(req, res);
+        }
+      );
+
+    this.router.post(
+      "/like/:id",
+      this.passport.authenticate("jwt", { session: false }),
+      (req, res) => {
+        this.postsController.likePost(req, res);
+      }
+    );
+
+    this.router.post(
+      "/unlike/:id",
+      this.passport.authenticate("jwt", { session: false }),
+      (req, res) => {
+        this.postsController.unlikePost(req, res);
+      }
+    );
+
+    this.router.post(
+      "/comment/:id",
+      this.passport.authenticate("jwt", { session: false }),
+      (req, res) => {
+        this.postsController.addComment(req, res);
+      }
+    );
+
+    this.router.delete(
+      "/comment/:id/:comment_id",
+      this.passport.authenticate("jwt", { session: false }),
+      (req, res) => {
+        this.postsController.removeComment(req, res);
+      }
+    );
+    return this.router;
   }
-);
-module.exports = router;
+}
